@@ -5,7 +5,10 @@ from string import Template
 
 
 DEFAULT_FIREJAIL_PATH = os.path.join(os.path.expanduser('~'), '.config', 'firejail')
-DEFAULT_TEMPLATE_PATH = os.path.join(DEFAULT_FIREJAIL_PATH, 'python-env-template.profile')
+DEFAULT_TEMPLATE_PATH = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    'python-env-template.profile',
+)
 
 
 class ProfileTemplate(Template):
