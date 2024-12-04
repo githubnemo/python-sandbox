@@ -45,7 +45,13 @@ def main(args):
 
     write_profile(profile_path, profile_str)
 
-    print(f'Written profile to {profile_path}.')
+    print(f"Written profile to {profile_path}.")
+    print("")
+    print(f"""Start your sandbox by running
+
+    firejail --profile=python-env-{args.sandbox_name} --tab bash
+
+""")
 
 
 if __name__ == "__main__":
