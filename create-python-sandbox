@@ -1,0 +1,58 @@
+#!/usr/bin/python3
+
+import os
+from string import Template
+
+
+DEFAULT_FIREJAIL_PATH = os.path.join(os.path.expanduser('~'), '.config', 'firejail')
+DEFAULT_TEMPLATE_PATH = os.path.join(DEFAULT_FIREJAIL_PATH, 'python-env-template.profile')
+
+
+class ProfileTemplate(Template):
+    delimiter = '€'
+
+
+def read_template(path):
+    with open(path) as f:
+        return ProfileTemplate(f.read())
+
+
+def write_profile(path, content):
+    with open(path, 'w') as f:
+        f.write(content)
+
+
+def main(args):
+    print(f'Loading template {args.template}.')
+    template_str = read_template(args.template)
+    profile_str = template_str.substitute({
+        'sandbox_name': args.sandbox_name,
+        'working_dir': args.working_dir,
+    })
+
+    if not os.path.exists(DEFAULT_FIREJAIL_PATH):
+        os.makedirs(DEFAULT_FIREJAIL_PATH, exist_ok=True)
+
+    profile_name = f'python-env-{args.sandbox_name}.profile'
+    profile_path = os.path.join(DEFAULT_FIREJAIL_PATH, profile_name)
+
+    if os.path.exists(profile_path):
+        print('Profile already exists. Aborting.')
+        return 1
+
+    write_profile(profile_path, profile_str)
+
+    print(f'Written profile to {profile_path}.')
+
+
+if __name__ == "__main__":
+    import sys
+    from argparse import ArgumentParser
+    parser = ArgumentParser()
+    parser.add_argument('sandbox_name', type=str, help="name of sandbox (needs to be FS compatible)")
+    parser.add_argument('working_dir', type=str, help="Working directory of the sandbox")
+    parser.add_argument('--template', type=str, default=DEFAULT_TEMPLATE_PATH, help="Path to the firejail profile template")
+
+    args = parser.parse_args()
+    ret = main(args)
+    sys.exit(ret or 0)
