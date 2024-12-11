@@ -35,6 +35,9 @@ whitelist ${HOME}/.bashrc
 # it is temporary and discarded after sandbox shutdown!
 mkfile ${HOME}/.viminfo
 
+# Exceptions for tools that we need when developing, such as ssh.
+noblacklist ${PATH}/ssh
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 
