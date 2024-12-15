@@ -54,7 +54,7 @@ disable-mnt
 # we are running inside a jailed environment.
 #
 # This can, of course, be used against us but I don't see a better way yet.
-env JAILED_ENV=1
+env JAILED_ENV=€{sandbox_name}
 
 
 ### GPU access
