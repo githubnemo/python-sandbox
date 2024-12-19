@@ -25,6 +25,16 @@ def write_profile(path, content):
         f.write(content)
 
 
+def write_sandbox_dotfile(sandbox_name, working_dir):
+    """This allows for shells to automatically enable the
+    sandbox once they find the file.
+    """
+    path = os.path.join(working_dir, '.python-sandbox')
+    with open(path, 'w') as f:
+        f.write(sandbox_name + '\n')
+    return path
+
+
 def main(args):
     print(f'Loading template {args.template}.')
     template_str = read_template(args.template)
@@ -45,7 +55,13 @@ def main(args):
 
     write_profile(profile_path, profile_str)
 
+    sandbox_dotfile = write_sandbox_dotfile(
+        args.sandbox_name,
+        args.working_dir,
+    )
+
     print(f"Written profile to {profile_path}.")
+    print(f"Written {args.sandbox_name} to {sandbox_dotfile}.")
     print("")
     print(f"""Start your sandbox by running
 
