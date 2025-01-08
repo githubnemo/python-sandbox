@@ -41,7 +41,7 @@ $ pip install [...]
 It is best to make access to the sandbox as easy as possible.
 At best, never leave it (launch a tmux session inside the sandbox,
 work in there). Second best: create an alias to quickly jump into
-the sandbox. See [this section][Common entrypoint]:
+the sandbox. See [section "Common entrypoint"](#common-entrypoint):
 
 ```
 $ sbox mynewproject
