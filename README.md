@@ -10,6 +10,8 @@ environments. This means that you will have an isolated shell with only
 selected parts, some read-only, some not at all visible, of your host
 filesystem.
 
+![Image of a terminal showing access of .ssh folder and no access after activation of the sandbox](./assets/premise.png)
+
 This is by no means perfect but at least it is better than being at
 the mercy of pypi.
 
@@ -61,14 +63,14 @@ so I can quickly jump into the sandbox using `sbox myenv`.
 
 ### Visual hint of being inside a sandbox
 To gauge if I'm in a sandbox or not the sandbox environment
-provides an environment variable (`JAILED_ENV=1`) so it is
+provides an environment variable (`JAILED_ENV=<env name>`) so it is
 easy to react on that in the shell prompt.
 
 Example from my `.bashrc`:
 ```bash
 jail=""
 if [ -n "$JAILED_ENV" ]; then
-    jail="(J)"
+    jail="(J:${JAILED_ENV})"
 fi
 
 if [ "$color_prompt" = yes ]; then
@@ -76,4 +78,42 @@ if [ "$color_prompt" = yes ]; then
 else
     PS1='${debian_chroot:+($debian_chroot)}${jail}\u@\h:\w\$ '
 fi
+```
+
+### Entering the sandbox upon entering a directory
+To enter the sandbox as soon as you're working on a project, you can configure
+your shell to watch for `.python-sandbox` files with the sandbox's name in it.
+
+![Showcase of activating the sandbox on directory change](./assets/on-dir-change.png)
+
+There's an example for ZSH in [`examples/zsh.md`](./examples/zsh.md),
+the gist is:
+
+```bash
+# Little helper to go upward the directory tree in search for a file.
+# Makes sure to use the least amount of external tools for performance.
+_upfind() {
+    if [[ "$2" -eq 0 ]]; then
+        return 1
+    fi
+    [[ -e "$1" ]] && echo "$1" || _upfind "../$1" "$(($2 - 1))"
+}
+
+enable_sbox_if_needed() {
+    if [ -n "$JAILED_ENV" ]; then
+        return
+    fi
+
+    # Look into current and upward directories for sandbox file to
+    # enable sandbox upon finding it.
+    sandbox_file=$(_upfind ".python-sandbox" 5)
+
+	if [[ "$?" -eq 0 ]]; then
+        export PWD_BEFORE_JAIL="$PWD"
+        sbox "$(head -n1 "$sandbox_file")"
+    fi
+}
+
+add-zsh-hook chpwd enable_sbox_if_needed
+enable_sbox_if_needed
 ```
