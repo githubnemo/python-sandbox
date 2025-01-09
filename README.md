@@ -37,6 +37,8 @@ $ git clone git@github.com:githubnemo/python-sandbox.git
 <add $PWD/python-sandbox to your PATH in .bashrc / .zshrc / ...>
 ```
 
+This setup assumes that your python envs will live in `~/envs/<sandbox-name>`.
+
 ### Advanced shell integration
 
 There are examples for [ZSH](./examples/zsh.md) and [bash](./examples/bash.md)

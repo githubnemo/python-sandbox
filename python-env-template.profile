@@ -2,8 +2,8 @@ include /etc/firejail/globals.local
 
 # do not assume a shell (and therefore mock a rc file)
 # since we want to allow our own shell config (but read-only)
-shell none
-#keep-shell-rc  # enable this for firejail >0.9.66
+#shell none
+keep-shell-rc  # enable this for firejail >0.9.66
 
 ### Permission overrides
 #
