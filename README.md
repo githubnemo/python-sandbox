@@ -3,6 +3,9 @@
 Do you trust whatever comes out of `pip install`?
 Do you [trust nightly builds](https://pytorch.org/blog/compromised-nightly-dependency/)?
 
+A single hijacked package in your dependencies can leak all your secrets
+(private keys, tokens, github access, emails, ...).
+
 No? Good! Maybe this is a solution for you, then.
 
 This project aims to provide firejail profiles for python development
@@ -20,6 +23,27 @@ the mercy of pypi.
 - firejail
 - python-virtualenv
 - bash or zsh
+- Linux based OS (WSL2 *might* work)
+
+## Installation
+
+### Very basic
+
+This will give you the ability to create python sandboxes from a template
+and nothing more. No integration into your shell. This is how to do it:
+```bash
+$ sudo apt install firejail python-virtualenv
+$ git clone git@github.com:githubnemo/python-sandbox.git
+<add $PWD/python-sandbox to your PATH in .bashrc / .zshrc / ...>
+```
+
+### Advanced shell integration
+
+There are examples for [ZSH](./examples/zsh.md) and [bash](./examples/bash.md)
+on how to integrate these sandboxes better into your environment. These features
+are showcased in the [Neat Things](#neat-things) section. I'm not confident
+enough in these features yet to build a script that you can simply source,
+sorry.
 
 ## Workflow
 
@@ -119,7 +143,20 @@ enable_sbox_if_needed
 ```
 
 
-# To do
+## Caveats
+
+### My bashrc is different in the sandbox :(
+Depending on your firejail version, the sandbox bashrc is sourced from
+`/etc/skel/.bashrc`. Newer versions of firejail support the `keep-shell-rc`
+configuration option. Enable it in the template to avoid this problem.
+
+### Tab completion is not working?!
+Note the `--tab` option of firejail. Firejail disables tab completion for
+bash since there were vulnerabilities in the implementation before and you
+have to supply `--tab` to enable that feature explicitly.
+
+
+## To do
 
 - [ ] limit access to SSH agent from inside the sandbox
 - [ ] limit access to specific read-only tokens (e.g. hf hub)
