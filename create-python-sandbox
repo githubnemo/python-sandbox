@@ -53,6 +53,7 @@ def main(args):
     profile_str = template_str.substitute({
         'sandbox_name': args.sandbox_name,
         'working_dir': working_dir,
+        'HOME': os.path.expanduser('~'),
     })
 
     if not os.path.exists(DEFAULT_FIREJAIL_PATH):

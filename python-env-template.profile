@@ -96,9 +96,10 @@ whitelist ${HOME}/bin/mamba
 mkdir ~/.cache/pysandbox-€{sandbox_name}/
 whitelist ~/.cache/pysandbox-€{sandbox_name}/
 
-env HF_HOME=~/.cache/pysandbox-€{sandbox_name}/huggingface
-env PIP_CACHE_DIR=~/.cache/pysandbox-€{sandbox_name}/pip
-env CONDA_ENVS_PATH=~/envs/€{sandbox_name}/conda
+env HF_HOME=€{HOME}/.cache/pysandbox-€{sandbox_name}/huggingface
+env PIP_CACHE_DIR=€{HOME}/.cache/pysandbox-€{sandbox_name}/pip
+env CONDA_ENVS_PATH=€{HOME}/envs/€{sandbox_name}/conda
+env CONDA_PKGS_DIRS=€{HOME}/envs/€{sandbox_name}/conda/_pkgs
 
 ### Work directory
 #
