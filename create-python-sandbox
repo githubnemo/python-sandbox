@@ -35,12 +35,24 @@ def write_sandbox_dotfile(sandbox_name, working_dir):
     return path
 
 
+def resolve_working_dir(working_dir):
+    """Make sure to get an absolute path or raise an error.
+    For example, if "." is supplied, it should resolve in the
+    current working dir as an absolute path since `.` would
+    not be valid as working dir in the template.
+    """
+    return os.path.abspath(working_dir)
+
+
 def main(args):
     print(f'Loading template {args.template}.')
+
+    working_dir = resolve_working_dir(args.working_dir)
+
     template_str = read_template(args.template)
     profile_str = template_str.substitute({
         'sandbox_name': args.sandbox_name,
-        'working_dir': args.working_dir,
+        'working_dir': working_dir,
     })
 
     if not os.path.exists(DEFAULT_FIREJAIL_PATH):
@@ -57,7 +69,7 @@ def main(args):
 
     sandbox_dotfile = write_sandbox_dotfile(
         args.sandbox_name,
-        args.working_dir,
+        working_dir,
     )
 
     print(f"Written profile to {profile_path}.")
