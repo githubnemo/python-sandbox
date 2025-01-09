@@ -47,6 +47,27 @@ are showcased in the [Neat Things](#neat-things) section. I'm not confident
 enough in these features yet to build a script that you can simply source,
 sorry.
 
+### Allowing your tools inside the sandbox
+
+The default template will never cover all your custom setup. To allow for
+additional tools outside of the basic template, you can add your own
+access configuration with a local override that works for *every* template.
+
+You can place arbitrary rules in `~/.config/firejail/python-env-template.local`
+and they are included in the environment profile.
+
+For example, if you have a specific tool, say `fzf`, in a directory outside of
+the sandbox and your `.bashrc` depends on that path, you could add it there.
+
+Example `python-env-template.local` file:
+```
+whitelist ${HOME}/Code/fzf
+read-only ${HOME}/Code/fzf
+```
+
+With the above content your sandbox is now able to access `~/Code/fzf`.
+See `man firejail-profile` for all possible directives.
+
 ## Workflow
 
 New python project? New sandbox.

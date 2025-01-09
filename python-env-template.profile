@@ -73,21 +73,21 @@ noblacklist /dev/nvidia-uvm
 read-only ~/.zshrc
 read-only ~/.bashrc
 
-whitelist ${HOME}/Code/pyenv/
-read-only ${HOME}/Code/pyenv/
-
-whitelist ${HOME}/Code/fzf
-read-only ${HOME}/Code/fzf
-whitelist ${HOME}/Code/goto-tool
-read-only ${HOME}/Code/goto-tool
-whitelist ${HOME}/.config/goto_favourites.list
-whitelist ${HOME}/.config/goto.lock
-
-# Enable read-only access to (mini)forge/conda directory
-whitelist ${HOME}/Code/conda
-read-only ${HOME}/Code/conda
-whitelist ${HOME}/bin/conda
-whitelist ${HOME}/bin/mamba
+# Every setup is a bit different. To support your local tools that you
+# want to have in your environment, you can add custom allowances here.
+#
+# To do this, create ~/.config/firejail/python-env-template.local
+#
+# Example content could be:
+# whitelist ${HOME}/Code/pyenv/
+# read-only ${HOME}/Code/pyenv/
+#
+# whitelist ${HOME}/Code/fzf
+# read-only ${HOME}/Code/fzf
+# whitelist ${HOME}/Code/goto-tool
+# read-only ${HOME}/Code/goto-tool
+#
+include python-env-template.local
 
 ### Caching directories
 #
