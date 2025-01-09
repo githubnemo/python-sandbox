@@ -83,6 +83,9 @@ read-only ${HOME}/Code/goto-tool
 whitelist ${HOME}/.config/goto_favourites.list
 whitelist ${HOME}/.config/goto.lock
 
+# Enable read-only access to (mini)forge/conda directory
+whitelist ${HOME}/Code/conda
+read-only ${HOME}/Code/conda
 
 ### Caching directories
 #
@@ -93,7 +96,7 @@ whitelist ~/.cache/pysandbox-€{sandbox_name}/
 
 env HF_HOME=~/.cache/pysandbox-€{sandbox_name}/huggingface
 env PIP_CACHE_DIR=~/.cache/pysandbox-€{sandbox_name}/pip
-
+env CONDA_ENVS_PATH=~/envs/€{sandbox_name}/conda
 
 ### Work directory
 #
@@ -104,6 +107,7 @@ env PIP_CACHE_DIR=~/.cache/pysandbox-€{sandbox_name}/pip
 # sandbox environment.
 #
 mkdir ~/envs/€{sandbox_name}
+mkdir ~/envs/€{sandbox_name}/conda
 whitelist ~/envs/€{sandbox_name}
 whitelist €{working_dir}
 private-cwd €{working_dir}
