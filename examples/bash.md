@@ -6,6 +6,16 @@ sbox() {
     firejail --profile=~/.config/firejail/python-env-$1.profile --tab bash
 }
 
+sa() {
+	source ~/envs/$1/bin/activate
+}
+
+if [ -n "$JAILED_ENV" ]; then
+   if [ -n "$PWD_BEFORE_JAIL" ]; then
+       cd "$PWD_BEFORE_JAIL"
+   fi
+   sa "${JAILED_ENV}"
+fi
 
 # Little helper to go upward the directory tree in search for a file.
 # Makes sure to use the least amount of external tools for performance.
