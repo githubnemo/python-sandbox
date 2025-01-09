@@ -117,3 +117,9 @@ enable_sbox_if_needed() {
 add-zsh-hook chpwd enable_sbox_if_needed
 enable_sbox_if_needed
 ```
+
+
+# To do
+
+- [ ] limit access to SSH agent from inside the sandbox
+- [ ] limit access to specific read-only tokens (e.g. hf hub)
