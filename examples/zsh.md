@@ -36,10 +36,10 @@ fi
 function sa() {
 	local env
 	local script
-	env=~nemo"/envs/$1/"
+	env=~"/envs/$1/"
 	script="$env/bin/activate"
 	if ! [ -e "$script" ]; then
-		echo "Env "$1" does not seem to exist :("
+		echo "Env '$1' does not seem to exist :("
 		echo "($script)"
 		return 1
 	fi
