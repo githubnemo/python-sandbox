@@ -162,3 +162,4 @@ have to supply `--tab` to enable that feature explicitly.
 
 - [ ] limit access to SSH agent from inside the sandbox
 - [ ] limit access to specific read-only tokens (e.g. hf hub)
+- [ ] make paths to tools like fzf, pyenv, conda, etc. configurable
