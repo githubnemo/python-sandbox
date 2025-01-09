@@ -86,6 +86,8 @@ whitelist ${HOME}/.config/goto.lock
 # Enable read-only access to (mini)forge/conda directory
 whitelist ${HOME}/Code/conda
 read-only ${HOME}/Code/conda
+whitelist ${HOME}/bin/conda
+whitelist ${HOME}/bin/mamba
 
 ### Caching directories
 #
