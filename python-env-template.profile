@@ -98,8 +98,8 @@ whitelist ~/.cache/pysandbox-€{sandbox_name}/
 
 env HF_HOME=€{HOME}/.cache/pysandbox-€{sandbox_name}/huggingface
 env PIP_CACHE_DIR=€{HOME}/.cache/pysandbox-€{sandbox_name}/pip
-env CONDA_ENVS_PATH=€{HOME}/envs/€{sandbox_name}/conda
-env CONDA_PKGS_DIRS=€{HOME}/envs/€{sandbox_name}/conda/_pkgs
+env CONDA_ENVS_PATH=€{env_dir}/€{sandbox_name}/conda
+env CONDA_PKGS_DIRS=€{env_dir}/€{sandbox_name}/conda/_pkgs
 
 ### Work directory
 #
@@ -109,9 +109,9 @@ env CONDA_PKGS_DIRS=€{HOME}/envs/€{sandbox_name}/conda/_pkgs
 # working directory + python environment directory - both specific to the
 # sandbox environment.
 #
-mkdir ~/envs/€{sandbox_name}
-mkdir ~/envs/€{sandbox_name}/conda
-whitelist ~/envs/€{sandbox_name}
+mkdir €{env_dir}/€{sandbox_name}
+mkdir €{env_dir}/€{sandbox_name}/conda
+whitelist €{env_dir}/€{sandbox_name}
 whitelist €{working_dir}
 private-cwd €{working_dir}
 

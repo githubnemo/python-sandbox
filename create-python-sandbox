@@ -9,6 +9,7 @@ DEFAULT_TEMPLATE_PATH = os.path.join(
     os.path.dirname(os.path.realpath(__file__)),
     'python-env-template.profile',
 )
+DEFAULT_ENVS_PATH = os.path.join(os.path.expanduser('~'), 'envs')
 
 
 class ProfileTemplate(Template):
@@ -44,6 +45,16 @@ def resolve_working_dir(working_dir):
     return os.path.abspath(working_dir)
 
 
+def resolve_env_dir():
+    """Make sure that the user can permanently overwrite the place
+    where python environments are assumed to reside by the firejail
+    profile.
+
+    Method: Set `PYSANDBOX_ENVS_PATH` environment variable.
+    """
+    return os.environ.get('PYSANDBOX_ENVS_PATH', DEFAULT_ENVS_PATH)
+
+
 def main(args):
     print(f'Loading template {args.template}.')
 
@@ -53,6 +64,7 @@ def main(args):
     profile_str = template_str.substitute({
         'sandbox_name': args.sandbox_name,
         'working_dir': working_dir,
+        'env_dir': resolve_env_dir(),
         'HOME': os.path.expanduser('~'),
     })
 
@@ -86,7 +98,18 @@ def main(args):
 if __name__ == "__main__":
     import sys
     from argparse import ArgumentParser
-    parser = ArgumentParser()
+    parser = ArgumentParser(
+        description="""Create a new python sandbox profile in the firejail
+configuration directory given the name of the sandbox
+and it's working directory (which gets full read-write)
+access. The tool automatically places a `.python-sandbox` file with the
+sandbox's name in the working directory.
+
+For venv/conda/... environments, by default ~/envs/<sandbox name> is allowed.
+To override the default directory where environments are supposed to be
+stored, set the PYSANDBOX_ENVS_PATH environment variable.
+"""
+    )
     parser.add_argument('sandbox_name', type=str, help="name of sandbox (needs to be FS compatible)")
     parser.add_argument('working_dir', type=str, help="Working directory of the sandbox")
     parser.add_argument('--template', type=str, default=DEFAULT_TEMPLATE_PATH, help="Path to the firejail profile template")
