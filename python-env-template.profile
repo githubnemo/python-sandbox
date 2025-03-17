@@ -38,6 +38,10 @@ mkfile ${HOME}/.viminfo
 # Exceptions for tools that we need when developing, such as ssh.
 noblacklist ${PATH}/ssh
 
+# necessary for older firejail versions where profile.d is blacklisted
+# by disable-common.inc which makes the VTE new-tab feature hard to implement
+noblacklist /etc/profile.d
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-programs.inc
 
