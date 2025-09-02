@@ -104,6 +104,7 @@ env HF_HOME=€{HOME}/.cache/pysandbox-€{sandbox_name}/huggingface
 env PIP_CACHE_DIR=€{HOME}/.cache/pysandbox-€{sandbox_name}/pip
 env CONDA_ENVS_PATH=€{env_dir}/€{sandbox_name}/conda
 env CONDA_PKGS_DIRS=€{env_dir}/€{sandbox_name}/conda/_pkgs
+env HISTFILE=€{HOME}/.cache/pysandbox-€{sandbox_name}/.shell_history
 
 ### Work directory
 #
