@@ -106,6 +106,9 @@ env CONDA_ENVS_PATH=€{env_dir}/€{sandbox_name}/conda
 env CONDA_PKGS_DIRS=€{env_dir}/€{sandbox_name}/conda/_pkgs
 env HISTFILE=€{HOME}/.cache/pysandbox-€{sandbox_name}/.shell_history
 
+# needs a directory that is able to execute files, .cache (default) is not that
+env PRE_COMMIT_HOME=€{env_dir}/pre-commit-home
+
 ### Work directory
 #
 # You need to specify the directories that are read+write. Note that malicious
